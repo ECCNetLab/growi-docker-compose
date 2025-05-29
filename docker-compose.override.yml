@@ -12,9 +12,7 @@ services:
       - app:app
       - dex:dex
     environment:
-      DOMAINS: >
-        "wiki.netken.ecc-comp.com -> http://app:3000",
-        "auth.netken.ecc-comp.com -> http://dex:5556"
+      DOMAINS: 'wiki.netken.ecc-comp.com -> http://app:3000, auth.netken.ecc-comp.com -> http://dex:5556'
       STAGE: "production"
       FORCE_RENEW: "false"
       WEBSOCKET: "true"
