@@ -1,35 +1,22 @@
-version: "3"
+version: '3'
 
 services:
   app:
     image: weseek/growi:7
     ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000    # localhost only by default
     links:
       - mongo:mongo
       - elasticsearch:elasticsearch
-      - dex:dex
     depends_on:
-      mongo:
-        condition: service_healthy
-      elasticsearch:
-        condition: service_healthy
-      dex:
-        condition: service_healthy
+        mongo:
+          condition: service_healthy
+        elasticsearch:
+          condition: service_healthy
     environment:
-      # Basic Growi settings
       - MONGO_URI=mongodb://mongo:27017/growi
       - ELASTICSEARCH_URI=http://elasticsearch:9200/growi
       - PASSWORD_SEED=changeme
-      - APP_SITE_URL=http://127.0.0.1:3000
-      - SECRET_TOKEN=your-secret-token-here
-
-      # OIDC settings for GitHub authentication via Dex
-      - OAUTH_OIDC_ISSUER_HOST=http://dex:5556
-      - OAUTH_OIDC_CLIENT_ID=growi-client
-      - OAUTH_OIDC_CLIENT_SECRET=growi-secret
-
-      # Optional settings (uncomment as needed)
       # - FILE_UPLOAD=mongodb   # activate this line if you use MongoDB GridFS rather than AWS
       # - FILE_UPLOAD=local     # activate this line if you use local storage of server rather than AWS
       # - MATHJAX=1             # activate this line if you want to use MathJax
@@ -38,36 +25,11 @@ services:
       # - FORCE_WIKI_MODE='private'   # activate this line to force wiki private mode
 
     entrypoint: "/docker-entrypoint.sh"
-    command:
-      [
-        "npm run migrate && node -r dotenv-flow/config --expose_gc dist/server/app.js",
-      ]
+    command: ["npm run migrate && node -r dotenv-flow/config --expose_gc dist/server/app.js"]
+
     restart: unless-stopped
     volumes:
       - growi_data:/data
-
-  dex:
-    image: ghcr.io/dexidp/dex:v2.43.1
-    restart: unless-stopped
-    ports:
-      - "5556:5556"
-    volumes:
-      - ./dex-config.yaml:/etc/dex/config.yaml:ro
-    command: ["dex", "serve", "/etc/dex/config.yaml"]
-    environment:
-      - DEX_LISTEN=0.0.0.0:5556
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "sh",
-          "-c",
-          "echo -e 'GET /healthz HTTP/1.1\\r\\nHost: localhost:5556\\r\\n\\r\\n' | nc localhost 5556 | grep -q '200 OK'",
-        ]
-      interval: 30s
-      timeout: 15s
-      retries: 3
-      start_period: 45s
 
   mongo:
     image: mongo:6.0
@@ -87,7 +49,7 @@ services:
       dockerfile: ./Dockerfile
     environment:
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms256m -Xmx256m" # increase amount if you have enough memory
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"  # increase amount if you have enough memory
       - LOG4J_FORMAT_MSG_NO_LOOKUPS=true # CVE-2021-44228 mitigation for Elasticsearch <= 6.8.20/7.16.0
     ulimits:
       memlock:
