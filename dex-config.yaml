@@ -1,0 +1,30 @@
+issuer: http://localhost:5556
+
+storage:
+  type: memory
+
+connectors:
+  - type: github
+    id: github
+    name: GitHub
+    config:
+      clientID:
+      clientSecret:
+      redirectURI: http://localhost:5556/callback
+      orgs:
+        - name: ECCNetLab
+      loadAllGroups: false
+
+oauth2:
+  skipApprovalScreen: true
+
+staticClients:
+  - id: growi-client
+    redirectURIs:
+      - "http://127.0.0.1:3000/passport/oidc/callback"
+    name: "Growi Wiki"
+    secret: growi-secret
+
+web:
+  http: 0.0.0.0:5556
+  allowedOrigins: ["*"]
