@@ -10,7 +10,7 @@ connectors:
     config:
       clientID:
       clientSecret:
-      redirectURI: http://localhost:5556/callback
+      redirectURI: https://auth.netken.ecc-comp.com/callback
       orgs:
         - name: ECCNetLab
       loadAllGroups: false
@@ -21,7 +21,7 @@ oauth2:
 staticClients:
   - id: growi-client
     redirectURIs:
-      - "http://127.0.0.1:3000/passport/oidc/callback"
+      - "https://wiki.netken.ecc-comp.com/passport/oidc/callback"
     name: "Growi Wiki"
     secret: growi-secret
 

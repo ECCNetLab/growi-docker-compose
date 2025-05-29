@@ -21,11 +21,11 @@ services:
       - MONGO_URI=mongodb://mongo:27017/growi
       - ELASTICSEARCH_URI=http://elasticsearch:9200/growi
       - PASSWORD_SEED=changeme
-      - APP_SITE_URL=http://127.0.0.1:3000
+      - APP_SITE_URL=https://wiki.netken.ecc-comp.com
       - SECRET_TOKEN=your-secret-token-here
 
       # OIDC settings for GitHub authentication via Dex
-      - OAUTH_OIDC_ISSUER_HOST=http://dex:5556
+      - OAUTH_OIDC_ISSUER_HOST=https://auth.netken.ecc-comp.com
       - OAUTH_OIDC_CLIENT_ID=growi-client
       - OAUTH_OIDC_CLIENT_SECRET=growi-secret
 
