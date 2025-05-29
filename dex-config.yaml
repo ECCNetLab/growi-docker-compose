@@ -1,0 +1,30 @@
+issuer: http://localhost:5556
+
+storage:
+  type: memory
+
+connectors:
+  - type: github
+    id: github
+    name: GitHub
+    config:
+      clientID:
+      clientSecret:
+      redirectURI: https://auth.netken.ecc-comp.com/callback
+      orgs:
+        - name: ECCNetLab
+      loadAllGroups: false
+
+oauth2:
+  skipApprovalScreen: true
+
+staticClients:
+  - id: growi-client
+    redirectURIs:
+      - "https://wiki.netken.ecc-comp.com/passport/oidc/callback"
+    name: "Growi Wiki"
+    secret: growi-secret
+
+web:
+  http: 0.0.0.0:5556
+  allowedOrigins: ["*"]
