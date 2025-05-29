@@ -11,6 +11,7 @@ services:
       - "5556:5556"
     links:
       - app:app
+      - dex:dex
     environment:
       DOMAINS: >
         "wiki.netken.ecc-comp.com -> http://app:3000"
