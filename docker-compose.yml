@@ -47,7 +47,7 @@ services:
       - growi_data:/data
 
   dex:
-    image: ghcr.io/dexidp/dex:v2.43.1
+    image: docker.io/dexidp/dex:v2.43.1
     restart: unless-stopped
     ports:
       - "5556:5556"
