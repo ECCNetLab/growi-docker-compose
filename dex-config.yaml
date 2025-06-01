@@ -27,4 +27,6 @@ staticClients:
 
 web:
   http: 0.0.0.0:5556
-  allowedOrigins: ["*"]
+  allowedOrigins:
+    - "https://wiki.netken.ecc-comp.com"
+    - "https://auth.netken.ecc-comp.com"
